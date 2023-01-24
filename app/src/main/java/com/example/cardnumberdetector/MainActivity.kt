@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity() {
     private val recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
     private lateinit var cameraExecutor: ExecutorService
     private lateinit var cameraSelector: CameraSelector
+    private lateinit var graphicOverlay: GraphicOverlay
     private var found = false
     private var _width = 0
     private var _height = 0
@@ -66,18 +67,24 @@ class MainActivity : AppCompatActivity() {
             }).check()
 
         cameraExecutor = Executors.newSingleThreadExecutor()
+        graphicOverlay = findViewById(R.id.graphicOverlay)
 
         val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
         cameraProviderFuture.addListener({
             val cameraProvider: ProcessCameraProvider = cameraProviderFuture.get()
             val preview = Preview.Builder()
                 .build()
-                .also { it.setSurfaceProvider(findViewById<PreviewView>(R.id.cameraPreview).surfaceProvider) }
+                .also {
+                    it.setSurfaceProvider(findViewById<PreviewView>(R.id.cameraPreview).surfaceProvider)
+
+                }
 
 
             val imageAnalyzer = ImageAnalysis.Builder()
                 .build()
-                .also { it.setAnalyzer(cameraExecutor, YourImageAnalyzer()) }
+                .also {
+                    it.setAnalyzer(cameraExecutor, YourImageAnalyzer())
+                }
 
             val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
 
@@ -110,6 +117,12 @@ class MainActivity : AppCompatActivity() {
                         it.textBlocks.forEach {
                             it.lines.forEach {
                                 if (it.text.startsWith("8600") && !found && it.text.length == 19) {
+//                                    it.elements.forEach {
+//                                        graphicOverlay.clear()
+//                                        val textGraphic = TextGraphic(graphicOverlay, it)
+//                                        graphicOverlay.add(textGraphic)
+//                                    }
+//                                    Toast.makeText(this@MainActivity, "Reading...", Toast.LENGTH_SHORT).show()
                                     found = true
                                     openDialog(it.text)
                                 }
@@ -144,5 +157,5 @@ class MainActivity : AppCompatActivity() {
         }
         builder.show()
     }
-    
+
 }

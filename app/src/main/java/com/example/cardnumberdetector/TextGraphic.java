@@ -31,11 +31,11 @@ public class TextGraphic extends GraphicOverlay.Graphic {
 
     private static final String TAG = "TextGraphic";
     private static final int TEXT_COLOR = Color.RED;
-    private static final float TEXT_SIZE = 54.0f;
+//    private static final float TEXT_SIZE = 54.0f;
     private static final float STROKE_WIDTH = 4.0f;
 
     private final Paint rectPaint;
-    private final Paint textPaint;
+//    private final Paint textPaint;
     private final Text.Element element;
 
     TextGraphic(GraphicOverlay overlay, Text.Element element) {
@@ -48,9 +48,9 @@ public class TextGraphic extends GraphicOverlay.Graphic {
         rectPaint.setStyle(Paint.Style.STROKE);
         rectPaint.setStrokeWidth(STROKE_WIDTH);
 
-        textPaint = new Paint();
-        textPaint.setColor(TEXT_COLOR);
-        textPaint.setTextSize(TEXT_SIZE);
+//        textPaint = new Paint();
+//        textPaint.setColor(TEXT_COLOR);
+//        textPaint.setTextSize(TEXT_SIZE);
         // Redraw the overlay, as this graphic has been added.
         postInvalidate();
     }
@@ -58,6 +58,7 @@ public class TextGraphic extends GraphicOverlay.Graphic {
     /**
      * Draws the text block annotations for position, size, and raw value on the supplied canvas.
      */
+
     @Override
     public void draw(Canvas canvas) {
         Log.d(TAG, "on draw text graphic");
@@ -70,6 +71,7 @@ public class TextGraphic extends GraphicOverlay.Graphic {
         canvas.drawRect(rect, rectPaint);
 
         // Renders the text at the bottom of the box.
-        canvas.drawText(element.getText(), rect.left, rect.bottom, textPaint);
+//        canvas.drawText(element.getText(), rect.left, rect.bottom, textPaint);
     }
+
 }
